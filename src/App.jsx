@@ -1,35 +1,70 @@
-import Header from './components/Header/Header'
-import Main from './components/Main/Main'
-import PopUser from './components/PopUser/PopUser'
-import PopNewCard from './components/PopNewCard/PopNewCard'
-import PopBrowse from './components/PopBrowse/PopBrowse'
-import './App.css'
-
-
-
-
+import { useState, useEffect } from 'react';  // ← ДОБАВИТЬ ЭТУ СТРОКУ
+import Header from './components/Header';
+import PopUser from './components/PopUser';
+import PopNewCard from './components/PopNewCard';
+import PopBrowse from './components/PopBrowse';
+import Column from './components/Column';
+import { cards } from './data';
+import './App.css';
 
 function App() {
+  const [loading, setLoading] = useState(true);  
+  const [cardsData, setCardsData] = useState([]);
+  
+  const columns = [
+    "Без статуса",
+    "Нужно сделать",
+    "В работе",
+    "Тестирование",
+    "Готово"
+  ];
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCardsData(cards);
+      setLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Если идёт загрузка — показываем сообщение
+  if (loading) {
+    return (
+      <div className="wrapper">
+        <Header />
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p className="loading-text">Данные загружаются...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Если загрузка закончена — показываем карточки
   return (
     <div className="wrapper">
       <PopUser />
       <PopNewCard />
       <PopBrowse />
       <Header />
-      <Main />
+      <main className="main">
+        <div className="container">
+          <div className="main__block">
+            <div className="main__content">
+              {columns.map((columnStatus) => (
+                <Column 
+                  key={columnStatus} 
+                  status={columnStatus} 
+                  cards={cardsData.filter(card => card.status === columnStatus)}  // ← cardsData, а не cards
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
 
-export default App
-
-
-    
-    
-
-
-
-
-
-
-
+export default App;

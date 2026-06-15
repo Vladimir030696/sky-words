@@ -1,16 +1,26 @@
-function Card({ theme, category, title, date }) {
-  const themeClass = {
-    orange: "_orange",
-    green: "_green",
-    purple: "_purple",
+function Card({ topic, title, date }) {
+  // Определяем цвет темы в зависимости от topic
+  const getThemeClass = (topic) => {
+    switch (topic) {
+      case 'Web Design':
+        return '_orange';
+      case 'Research':
+        return '_green';
+      case 'Copywriting':
+        return '_purple';
+      default:
+        return '_orange';
+    }
   };
+
+  const themeClass = getThemeClass(topic);
 
   return (
     <div className="cards__item">
       <div className="cards__card card">
         <div className="card__group">
-          <div className={`card__theme ${themeClass[theme]}`}>
-            <p className={themeClass[theme]}>{category}</p>
+          <div className={`card__theme ${themeClass}`}>
+            <p className={themeClass}>{topic}</p>
           </div>
           <a href="#popBrowse" target="_self">
             <div className="card__btn">
