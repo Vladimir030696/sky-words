@@ -1,34 +1,12 @@
-function Card({ topic, title, date }) {
-  // Определяем цвет темы в зависимости от topic
-  const getThemeClass = (topic) => {
-    switch (topic) {
-      case 'Web Design':
-        return '_orange';
-      case 'Research':
-        return '_green';
-      case 'Copywriting':
-        return '_purple';
-      default:
-        return '_orange';
-    }
-  };
+import CardContainer from './Card.styled.js'; 
 
-  const themeClass = getThemeClass(topic);
-
+function Card({ title, date,color }) {
+  
   return (
-    <div className="cards__item">
+    <CardContainer color={color} className="cards__item">
+    
       <div className="cards__card card">
         <div className="card__group">
-          <div className={`card__theme ${themeClass}`}>
-            <p className={themeClass}>{topic}</p>
-          </div>
-          <a href="#popBrowse" target="_self">
-            <div className="card__btn">
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </a>
         </div>
         <div className="card__content">
           <a href="" target="_blank">
@@ -67,7 +45,8 @@ function Card({ topic, title, date }) {
           </div>
         </div>
       </div>
-    </div>
+   
+    </CardContainer>
   );
 }
 
